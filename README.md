@@ -1,5 +1,5 @@
 # LWJGL and ThinMatrix
-A 3D Game Engine with Java 11 and LWJGL. It follows the 3D Game Engine tutorials by [@ThinMatrix](https://twitter.com/ThinMatrix).
+A 3D Game Engine with Java 11 and LWJGL 3. It follows the 3D Game Engine tutorials by [@ThinMatrix](https://twitter.com/ThinMatrix).
 
 There is a branch for each video in this playlist: [OpenGL 3D Game Tutorials](https://www.youtube.com/playlist?list=PLRIWtICgwaX0u7Rf9zkZhLoLuZVfUksDP)
 
@@ -13,5 +13,12 @@ You will need:
 Clone the repository, checkout the respective branch and then in IntelliJ IDEA: File > Open the directory. IDEA will 
 recognize that we are using Maven and setup everything for you.
 
-Note that since I'm using a newer version of JDK, LWJGL 3 and Maven, we can use more modern ways to do things and also 
+Note that since I'm using JDK 11, LWJGL 3 and Maven, we can use more modern ways to do things and also 
 applying my own experience writing Java code.
+
+In OSX you will need to add the following VM option in IDEA, go to Run > Edit Configurations:
+```
+-XstartOnFirstThread
+```
+
+This is the code up to the video: [OpenGL 3D Game Tutorial 1: The Display](https://youtu.be/VS8wlS9hF8E)

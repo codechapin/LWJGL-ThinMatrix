@@ -1,6 +1,6 @@
 package com.codechapin.lwjgl.thinmatrix;
 
-import org.lwjgl.Version;
+import com.codechapin.lwjgl.thinmatrix.render.DisplayManager;
 
 /**
  *
@@ -8,6 +8,15 @@ import org.lwjgl.Version;
  */
 public class MainGameLoop {
   public static void main(String[] args) {
-    System.out.println("LWJGL Version " + Version.getVersion() + " is working.");
+    var display = new DisplayManager();
+    display.create();
+
+    while (!display.isCloseRequested()) {
+      // game logic
+      // render
+      display.update();
+    }
+
+    display.close();
   }
 }
