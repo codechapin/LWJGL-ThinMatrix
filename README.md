@@ -1,5 +1,7 @@
 # LWJGL and ThinMatrix
-A 3D Game Engine with Java 11 and LWJGL 3. It follows the 3D Game Engine tutorials by [@ThinMatrix](https://twitter.com/ThinMatrix).
+A 3D Game Engine with LWJGL 3. The code is in Java 11 and Kotlin 1.3.
+
+It follows the 3D Game Engine tutorials by [@ThinMatrix](https://twitter.com/ThinMatrix).
 
 There is a branch for each video in this playlist: [OpenGL 3D Game Tutorials](https://www.youtube.com/playlist?list=PLRIWtICgwaX0u7Rf9zkZhLoLuZVfUksDP)
 

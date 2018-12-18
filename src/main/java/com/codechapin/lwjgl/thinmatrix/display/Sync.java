@@ -29,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.codechapin.lwjgl.thinmatrix.render;
+package com.codechapin.lwjgl.thinmatrix.display;
 
 /**
  * A highly accurate sync method that continually adapts to the system
@@ -38,7 +38,7 @@ package com.codechapin.lwjgl.thinmatrix.render;
  * @author Riven
  * @author kappaOne
  */
-public final class Sync {
+final class Sync {
 
   /**
    * number of nano seconds in a second
@@ -62,7 +62,7 @@ public final class Sync {
    * <p>
    * If running on windows it will start the sleep timer fix.
    */
-  public Sync() {
+  Sync() {
 
     sleepDurations.init(1000 * 1000);
     yieldDurations.init((int) (-(getTime() - getTime()) * 1.333));
