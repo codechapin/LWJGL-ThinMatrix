@@ -7,13 +7,10 @@ public class DisplayManager {
   private static final int HEIGHT = 720;
   private static final int FPS_CAP = 120;
 
-  private final Display display;
-
-  public DisplayManager() {
-    display = new Display(3, 2);
-  }
+  private Display display;
 
   public void create() {
+    display = new Display(3, 2);
     display.setForwardCompatible(true);
     display.setProfileCore(true);
     display.setTitle("Our First Display!");
