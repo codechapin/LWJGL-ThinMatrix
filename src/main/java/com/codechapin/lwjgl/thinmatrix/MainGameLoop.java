@@ -3,6 +3,7 @@ package com.codechapin.lwjgl.thinmatrix;
 import com.codechapin.lwjgl.thinmatrix.render.DisplayManager;
 import com.codechapin.lwjgl.thinmatrix.render.Loader;
 import com.codechapin.lwjgl.thinmatrix.render.Renderer;
+import com.codechapin.lwjgl.thinmatrix.shaders.StaticShader;
 
 /**
  *
@@ -15,6 +16,7 @@ public class MainGameLoop {
 
     var loader = new Loader();
     var renderer = new Renderer();
+    var shader = new StaticShader();
 
     float[] vertices = {
         -0.5f, 0.5f, 0f,    // V0
@@ -31,12 +33,15 @@ public class MainGameLoop {
     var model = loader.loadToVAO(vertices, indices);
 
     while (!display.isCloseRequested()) {
-      renderer.prepare();
       // game logic
+      renderer.prepare();
+      shader.start();
       renderer.render(model);
+      shader.stop();
       display.update();
     }
 
+    shader.cleanUp();
     loader.cleanUp();
     display.close();
   }

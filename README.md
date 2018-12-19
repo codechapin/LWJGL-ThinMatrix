@@ -18,9 +18,11 @@ recognize that we are using Maven and setup everything for you.
 Note that since I'm using JDK 11, LWJGL 3 and Maven, we can use more modern ways to do things and also 
 applying my own experience writing Java code.
 
+Because we are following the Maven directory layout, the shaders are under ```src/main/glsl```
+
 In OSX you will need to add the following VM option in IDEA, go to Run > Edit Configurations:
 ```
 -XstartOnFirstThread
 ```
 
-This is the code for the video: [OpenGL 3D Game Tutorial 4: Introduction to Shaders](https://youtu.be/AyNZG_mqGVE)
+This is the code for the video: [OpenGL 3D Game Tutorial 5: Coloring using Shaders](https://youtu.be/4w7lNF8dnYw)
