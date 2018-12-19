@@ -8,14 +8,14 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 public class Renderer {
 
   public void prepare() {
-    glClearColor(1, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(1, 0, 0, 1);
   }
 
   public void render(RawModel model) {
     glBindVertexArray(model.getVaoID());
     glEnableVertexAttribArray(0);
-    glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
+    glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(0);
     glBindVertexArray(0);
   }

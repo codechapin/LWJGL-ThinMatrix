@@ -17,17 +17,18 @@ public class MainGameLoop {
     var renderer = new Renderer();
 
     float[] vertices = {
-        // left bottom triangle
-        -0.5f, 0.5f, 0f,
-        -0.5f, -0.5f, 0f,
-        0.5f, -0.5f, 0f,
-        // right top triangle
-        0.5f, -0.5f, 0f,
-        0.5f, 0.5f, 0f,
-        -0.5f, 0.5f, 0f
+        -0.5f, 0.5f, 0f,    // V0
+        -0.5f, -0.5f, 0f,   // V1
+        0.5f, -0.5f, 0f,    // V2
+        0.5f, 0.5f, 0f      // V3
     };
 
-    var model = loader.loadToVAO(vertices);
+    int[] indices = {
+        0, 1, 3,            // Top left triangle (V0, V1, V3)
+        3, 1, 2             // Bottom right triangle (V3, V1, V2)
+    };
+
+    var model = loader.loadToVAO(vertices, indices);
 
     while (!display.isCloseRequested()) {
       renderer.prepare();

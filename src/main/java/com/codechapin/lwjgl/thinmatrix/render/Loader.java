@@ -3,6 +3,7 @@ package com.codechapin.lwjgl.thinmatrix.render;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 
 import static org.lwjgl.opengl.GL15.*;
@@ -13,12 +14,13 @@ public class Loader {
   private ArrayList<Integer> vaos = new ArrayList<>();
   private ArrayList<Integer> vbos = new ArrayList<>();
 
-  public RawModel loadToVAO(float[] positions) {
+  public RawModel loadToVAO(float[] positions, int[] indices) {
     var vaoID = createVAO();
+    bindIndicesBuffer(indices);
     storeDataInAttributeList(0, positions);
     unbindVAO();
 
-    return new RawModel(vaoID, positions.length / 3);
+    return new RawModel(vaoID, indices.length);
   }
 
   public void cleanUp() {
@@ -55,6 +57,24 @@ public class Loader {
 
   private void unbindVAO() {
     glBindVertexArray(0);
+  }
+
+  private void bindIndicesBuffer(int[] indices) {
+    var vboID = glGenBuffers();
+    vbos.add(vboID);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);
+
+    var buffer = storeDataInIntBuffer(indices);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+  }
+
+  private IntBuffer storeDataInIntBuffer(int[] data) {
+    var buffer = BufferUtils.createIntBuffer(data.length);
+    buffer.put(data);
+    buffer.flip();
+
+    return buffer;
   }
 
   private FloatBuffer storeDataInFloatBuffer(float[] data) {
