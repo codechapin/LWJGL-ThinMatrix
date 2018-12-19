@@ -1,14 +1,11 @@
 package com.codechapin.lwjgl.thinmatrix.display;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
-
-import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL.createCapabilities;
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.system.MemoryStack.stackPush;
@@ -89,21 +86,23 @@ public class Display {
 
     // Get the thread stack and push a new frame
     try (MemoryStack stack = stackPush()) {
-      IntBuffer pWidth = stack.mallocInt(1); // int*
-      IntBuffer pHeight = stack.mallocInt(1); // int*
+      var pWidth = stack.mallocInt(1); // int*
+      var pHeight = stack.mallocInt(1); // int*
 
       // Get the window size passed to glfwCreateWindow
       glfwGetWindowSize(window, pWidth, pHeight);
 
       // Get the resolution of the primary monitor
-      GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+      var videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
       // Center the window
-      glfwSetWindowPos(
-          window,
-          (vidmode.width() - pWidth.get(0)) / 2,
-          (vidmode.height() - pHeight.get(0)) / 2
-      );
+      if (videoMode != null) {
+        glfwSetWindowPos(
+            window,
+            (videoMode.width() - pWidth.get(0)) / 2,
+            (videoMode.height() - pHeight.get(0)) / 2
+        );
+      }
     } // the stack frame is popped automatically
 
     // Make the OpenGL context current
@@ -117,7 +116,7 @@ public class Display {
     // LWJGL detects the context that is current in the current thread,
     // creates the GLCapabilities instance and makes the OpenGL
     // bindings available for use.
-    GL.createCapabilities();
+    createCapabilities();
   }
 
   public void sync(int fps) {
@@ -143,7 +142,10 @@ public class Display {
 
     // Terminate GLFW and free the error callback
     glfwTerminate();
-    glfwSetErrorCallback(null).free();
+    var callback = glfwSetErrorCallback(null);
+    if (callback != null) {
+      callback.free();
+    }
   }
 
 }
