@@ -23,4 +23,4 @@ In OSX you will need to add the following VM option in IDEA, go to Run > Edit Co
 -XstartOnFirstThread
 ```
 
-This is the code for to the video: [OpenGL 3D Game Tutorial 1: The Display](https://youtu.be/VS8wlS9hF8E)
+This is the code for the video: [OpenGL 3D Game Tutorial 1: The Display](https://youtu.be/VS8wlS9hF8E)
