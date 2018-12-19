@@ -1,5 +1,5 @@
 # LWJGL and ThinMatrix
-A 3D Game Engine with LWJGL 3. The code is in Java 11 and Kotlin 1.3.
+A 3D Game Engine with LWJGL 3 and Java 11.
 
 It follows the 3D Game Engine tutorials by [@ThinMatrix](https://twitter.com/ThinMatrix).
 
@@ -23,4 +23,4 @@ In OSX you will need to add the following VM option in IDEA, go to Run > Edit Co
 -XstartOnFirstThread
 ```
 
-This is the code for the video: [OpenGL 3D Game Tutorial 3: Rendering with Index Buffers](https://youtu.be/z2yFlvkBbmk)
+This is the code for the video: [OpenGL 3D Game Tutorial 4: Introduction to Shaders](https://youtu.be/AyNZG_mqGVE)
