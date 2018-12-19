@@ -23,4 +23,4 @@ In OSX you will need to add the following VM option in IDEA, go to Run > Edit Co
 -XstartOnFirstThread
 ```
 
-This is the code up to the video: [](https://youtu.be/WMiggUPst-Q)OpenGL 3D Game Tutorial 2: VAOs and VBOs
+This is the code for the video: [OpenGL 3D Game Tutorial 2: VAOs and VBOs](https://youtu.be/WMiggUPst-Q)
