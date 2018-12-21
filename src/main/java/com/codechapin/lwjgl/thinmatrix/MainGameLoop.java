@@ -1,15 +1,21 @@
 package com.codechapin.lwjgl.thinmatrix;
 
+import com.codechapin.lwjgl.thinmatrix.models.TexturedModel;
 import com.codechapin.lwjgl.thinmatrix.render.DisplayManager;
 import com.codechapin.lwjgl.thinmatrix.render.Loader;
 import com.codechapin.lwjgl.thinmatrix.render.Renderer;
 import com.codechapin.lwjgl.thinmatrix.shaders.StaticShader;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  *
  *
  */
 public class MainGameLoop {
+  private static final Path TEXTURES_ROOT = Paths.get(".", "src", "main", "resources", "textures");
+
   public static void main(String[] args) {
     var display = new DisplayManager();
     display.create();
@@ -30,13 +36,22 @@ public class MainGameLoop {
         3, 1, 2             // Bottom right triangle (V3, V1, V2)
     };
 
-    var model = loader.loadToVAO(vertices, indices);
+    float[] textureCoords = {
+        0, 0,               // V0
+        0, 1,               // V1
+        1, 1,               // V2
+        1, 0                // V3
+    };
+
+    var model = loader.loadToVAO(vertices, textureCoords, indices);
+    var texture = loader.loadTexture(TEXTURES_ROOT.resolve(Paths.get("cat.png")));
+    var texturedModel = new TexturedModel(model, texture);
 
     while (!display.isCloseRequested()) {
       // game logic
       renderer.prepare();
       shader.start();
-      renderer.render(model);
+      renderer.render(texturedModel);
       shader.stop();
       display.update();
     }

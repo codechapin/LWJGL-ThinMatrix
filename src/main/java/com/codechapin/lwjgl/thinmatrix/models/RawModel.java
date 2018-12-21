@@ -1,4 +1,4 @@
-package com.codechapin.lwjgl.thinmatrix.render;
+package com.codechapin.lwjgl.thinmatrix.models;
 
 public class RawModel {
   private final int vaoID;

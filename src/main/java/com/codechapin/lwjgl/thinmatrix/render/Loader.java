@@ -1,26 +1,55 @@
 package com.codechapin.lwjgl.thinmatrix.render;
 
+import com.codechapin.lwjgl.thinmatrix.models.RawModel;
+import com.codechapin.lwjgl.thinmatrix.textures.Texture;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.stb.STBImage.stbi_image_free;
+import static org.lwjgl.stb.STBImage.stbi_load;
 
 public class Loader {
-  private ArrayList<Integer> vaos = new ArrayList<>();
-  private ArrayList<Integer> vbos = new ArrayList<>();
+  private List<Integer> vaos = new ArrayList<>();
+  private List<Integer> vbos = new ArrayList<>();
+  private List<Integer> textures = new ArrayList<>();
 
-  public RawModel loadToVAO(float[] positions, int[] indices) {
+  public RawModel loadToVAO(float[] positions, float[] textureCoords, int[] indices) {
     var vaoID = createVAO();
     bindIndicesBuffer(indices);
-    storeDataInAttributeList(0, positions);
+    storeDataInAttributeList(0, 3, positions);
+    storeDataInAttributeList(1, 2, textureCoords);
     unbindVAO();
 
     return new RawModel(vaoID, indices.length);
+  }
+
+  public Texture loadTexture(Path path) {
+
+    var id = glGenTextures();
+    textures.add(id);
+
+    glBindTexture(GL_TEXTURE_2D, id);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    var width = BufferUtils.createIntBuffer(1);
+    var height = BufferUtils.createIntBuffer(1);
+    var comp = BufferUtils.createIntBuffer(1);
+
+    var data = stbi_load(path.toString(), width, height, comp, 4);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(), height.get(), 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    stbi_image_free(data);
+
+    return new Texture(id);
   }
 
   public void cleanUp() {
@@ -32,6 +61,9 @@ public class Loader {
       glDeleteBuffers(vbo);
     }
 
+    for (var texture : textures) {
+      glDeleteTextures(texture);
+    }
   }
 
   private int createVAO() {
@@ -43,7 +75,7 @@ public class Loader {
     return vaoID;
   }
 
-  private void storeDataInAttributeList(int attributeNumber, float[] data) {
+  private void storeDataInAttributeList(int attributeNumber, int size, float[] data) {
     int vboID = glGenBuffers();
     vbos.add(vboID);
 
@@ -51,7 +83,7 @@ public class Loader {
 
     var buffer = storeDataInFloatBuffer(data);
     glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
-    glVertexAttribPointer(attributeNumber, 3, GL_FLOAT, false, 0, 0);
+    glVertexAttribPointer(attributeNumber, size, GL_FLOAT, false, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
   }
 
